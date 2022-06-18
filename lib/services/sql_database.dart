@@ -65,6 +65,8 @@ class SQLDatabase {
     ''');
   }
 
+
+
   /// CRUD
   Future<Note> create(Note note) async {
     // * Reference to database
@@ -84,6 +86,7 @@ class SQLDatabase {
   Future<Note> read(int id) async{
     // * Reference to database
     final database = await instance.database;
+
     final maps = await database.query(
       tableNotes,
       columns: NoteFields.values,
@@ -96,6 +99,42 @@ class SQLDatabase {
     }else{
       throw Exception('ID: $id not found');
     }
+  }
+
+  Future<List<Note>> readAll() async{
+    // * Reference to database
+    final database = await instance.database;
+
+    final orderBy = '${NoteFields.time} ASC'; // ASC = ascending order
+    final result = await database.query(tableNotes, orderBy: orderBy);
+
+    // * In order to create our own query statement
+    // final result1 = await database.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
+
+    return result.map((json) => Note.fromJson(json)).toList();
+  }
+
+  Future<int> update(Note note) async{
+    // * Reference to database
+    final database = await instance.database;
+    // * In order to use a SQL statement => use database.rawUpdate
+    return database.update(
+      tableNotes,
+      note.toJson(),
+      where: '${NoteFields.id} = ?',
+      whereArgs: [note.id]
+    );
+  }
+
+  Future<int> delete(int id) async{
+    // * Reference to database
+    final database = await instance.database;
+
+    return await database.delete(
+      tableNotes,
+      where: '${NoteFields.id} = ?',
+      whereArgs: [id],
+    );
   }
 
   Future close() async {
