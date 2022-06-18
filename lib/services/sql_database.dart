@@ -1,3 +1,4 @@
+import 'package:note_app_sql_database/models/note.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -42,7 +43,43 @@ class SQLDatabase {
   }
 
   // * Create Database Table
-  Future _createDatabase(Database database, int version) async {}
+  Future _createDatabase(Database database, int version) async {
+    // * Define Type
+    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const boolType = 'BOOLEAN NOT NULL';
+    const intType = 'INTEGER NOT NULL';
+    const textType = 'TEXT NOT NULL';
+
+    // * Define all the Columns inside of the parenthesis (Column name & Type,)
+    // * In order to create multiple data tables => simply duplicate the following
+    //   and then create the next data table...
+    await database.execute('''
+    CREATE TABLE $tableNotes (
+    ${NoteFields.id} $idType,
+    ${NoteFields.isImportant} $boolType,
+    ${NoteFields.number} $intType,
+    ${NoteFields.title} $textType,
+    ${NoteFields.description} $textType,
+    ${NoteFields.time} $textType,
+    )
+    ''');
+  }
+
+  /// CRUD
+  Future<Note> create(Note note) async {
+    // * Reference to database
+    final database = await instance.database;
+    /*
+    In order to create our own SQL statements
+    final json = note.toJson();
+    final columns = '${NoteFields.title}, ${NoteFields.description}, ${NoteFields.time}';
+    final values = '${json[NoteFields.title]}, ${json[NoteFields.description]}, ${json[NoteFields.time]}';
+    final id = await database.rawInsert('INSERT INTO table_name ($columns) VALUES ($values)');
+     */
+    // The whole code above does the same thing the code below does
+    final id = await database.insert(tableNotes, note.toJson());
+    return note.copy(id: id);
+  }
 
   Future close() async {
     // * Access The Database
