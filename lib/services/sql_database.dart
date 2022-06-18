@@ -21,7 +21,7 @@ class SQLDatabase {
     return _database!;
   }
 
-  // * Initialize The Database
+  // * Initialize Database
   Future<Database> _initializeDatabase(String filePath) async {
     // On Android, it is typically data/data/ /databases
     // On iOS and MacOS, it is the Documents directory.
@@ -54,18 +54,16 @@ class SQLDatabase {
     // * In order to create multiple data tables => simply duplicate the following
     //   and then create the next data table...
     await database.execute('''
-    CREATE TABLE $tableNotes (
+CREATE TABLE $tableNotes (
     ${NoteFields.id} $idType,
     ${NoteFields.isImportant} $boolType,
     ${NoteFields.number} $intType,
     ${NoteFields.title} $textType,
     ${NoteFields.description} $textType,
-    ${NoteFields.time} $textType,
+    ${NoteFields.time} $textType
     )
-    ''');
+''');
   }
-
-
 
   /// CRUD
   Future<Note> create(Note note) async {
@@ -83,7 +81,7 @@ class SQLDatabase {
     return note.copy(id: id);
   }
 
-  Future<Note> read(int id) async{
+  Future<Note> read(int id) async {
     // * Reference to database
     final database = await instance.database;
 
@@ -94,14 +92,14 @@ class SQLDatabase {
       whereArgs: [id], // For each question marks, the args are put
     );
 
-    if(maps.isNotEmpty){
+    if (maps.isNotEmpty) {
       return Note.fromJson(maps.first);
-    }else{
+    } else {
       throw Exception('ID: $id not found');
     }
   }
 
-  Future<List<Note>> readAll() async{
+  Future<List<Note>> readAll() async {
     // * Reference to database
     final database = await instance.database;
 
@@ -109,24 +107,24 @@ class SQLDatabase {
     final result = await database.query(tableNotes, orderBy: orderBy);
 
     // * In order to create our own query statement
-    // final result1 = await database.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
+    // final result = await database.rawQuery('SELECT * FROM $tableNotes ORDER BY $orderBy');
 
     return result.map((json) => Note.fromJson(json)).toList();
   }
 
-  Future<int> update(Note note) async{
+  Future<int> update(Note note) async {
     // * Reference to database
     final database = await instance.database;
     // * In order to use a SQL statement => use database.rawUpdate
     return database.update(
-      tableNotes,
-      note.toJson(),
-      where: '${NoteFields.id} = ?',
-      whereArgs: [note.id]
+        tableNotes,
+        note.toJson(),
+        where: '${NoteFields.id} = ?',
+        whereArgs: [note.id],
     );
   }
 
-  Future<int> delete(int id) async{
+  Future<int> delete(int id) async {
     // * Reference to database
     final database = await instance.database;
 
