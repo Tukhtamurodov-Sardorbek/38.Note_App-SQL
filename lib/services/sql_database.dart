@@ -81,6 +81,23 @@ class SQLDatabase {
     return note.copy(id: id);
   }
 
+  Future<Note> read(int id) async{
+    // * Reference to database
+    final database = await instance.database;
+    final maps = await database.query(
+      tableNotes,
+      columns: NoteFields.values,
+      where: '${NoteFields.id} = ?', // Should be as much as args list length
+      whereArgs: [id], // For each question marks, the args are put
+    );
+
+    if(maps.isNotEmpty){
+      return Note.fromJson(maps.first);
+    }else{
+      throw Exception('ID: $id not found');
+    }
+  }
+
   Future close() async {
     // * Access The Database
     final database = await instance.database;
