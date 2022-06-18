@@ -10,6 +10,16 @@ class NoteFields {
   static const String title = 'title';
   static const String description = 'description';
   static const String time = 'time';
+
+  // * All Column names list
+  static final List<String> values = [
+    id,
+    isImportant,
+    number,
+    title,
+    description,
+    time,
+  ];
 }
 
 class Note {
@@ -58,5 +68,16 @@ class Note {
       NoteFields.description: description,
       NoteFields.time: createdTime.toIso8601String(),
     };
+  }
+
+  static Note fromJson(Map<String, Object?> json){
+    return Note(
+      id: json[NoteFields.id] as int?,
+      isImportant: json[NoteFields.isImportant] == 1,
+      number: json[NoteFields.number] as int,
+      title: json[NoteFields.title] as String,
+      description: json[NoteFields.description] as String,
+      createdTime: DateTime.parse(json[NoteFields.time] as String),
+    );
   }
 }
