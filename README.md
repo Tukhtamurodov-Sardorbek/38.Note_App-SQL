@@ -1,8 +1,8 @@
 # ```Note App With SQL Database```
 
-| Home Page | Create Note Page |
-|----------------|:----------------:|
-| ![Home](assets/readme/1.jpg) | ![Create](assets/readme/2.jpg) |
+| Home Page | Create Note Page | Detail Page |
+|----------------|:----------------:|:----------------:|
+| ![Home](assets/readme/1.jpg) | ![Create](assets/readme/2.jpg) | ![Detail](assets/readme/detail_page.png) |
 
 | Create Note | Grid View | Grid View |
 |----------------|:----------------:|:----------------:|
