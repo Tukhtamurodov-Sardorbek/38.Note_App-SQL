@@ -10,6 +10,7 @@ class AppBarLeading extends StatelessWidget {
     final provider = context.watch<HomeProvider>();
     return Row(
       children: [
+        const SizedBox(width: 8.0),
         IconButton(
           splashRadius: 1,
           icon: AnimatedSwitcher(
