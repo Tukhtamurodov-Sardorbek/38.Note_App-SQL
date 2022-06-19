@@ -10,7 +10,7 @@ class BuildNotes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<HomeProvider>();
-    return provider.isPlaying
+    return provider.layoutChanged
         ? ListView.separated(
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(8.0),
