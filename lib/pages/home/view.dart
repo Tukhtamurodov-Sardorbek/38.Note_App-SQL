@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage>
               'Notes',
               style: TextStyle(fontSize: 24),
             ),
-            leadingWidth: 100,
+            leadingWidth: 110,
             leading: const AppBarLeading(),
             actions: [
               provider.notesToBeDeleted.isNotEmpty
