@@ -89,6 +89,7 @@ class FormWidget extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontSize: 24,
         ),
+        textInputAction: TextInputAction.next,
         decoration: const InputDecoration(
           border: InputBorder.none,
           hintText: 'Title',
@@ -103,6 +104,7 @@ class FormWidget extends StatelessWidget {
         maxLines: null,
         initialValue: description,
         style: const TextStyle(color: Colors.white70, fontSize: 18),
+    textInputAction: TextInputAction.newline,
         decoration: const InputDecoration(
           border: InputBorder.none,
           hintText: 'Type something...',
