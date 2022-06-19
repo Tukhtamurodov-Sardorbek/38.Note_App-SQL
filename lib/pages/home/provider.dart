@@ -12,6 +12,7 @@ class HomeProvider extends ChangeNotifier {
   bool _byTime = true;
   int _currIndex = 0;
   int _currIndex1 = 0;
+  int _currIndex2 = 0;
 
   final Map<Color, Color> _gradients = {
     const Color(0xffffc837) : const Color(0xffff8008),
@@ -35,7 +36,7 @@ class HomeProvider extends ChangeNotifier {
   };
 
   late AnimationController _animationController;
-  bool _isPlaying = false;
+  bool _layoutChanged = false;
 
 
   // * Getters & Setters
@@ -73,10 +74,10 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  bool get isPlaying => _isPlaying;
-  set isPlaying(bool value) {
-    if(value != _isPlaying){
-      _isPlaying = value;
+  bool get layoutChanged => _layoutChanged;
+  set layoutChanged(bool value) {
+    if(value != _layoutChanged){
+      _layoutChanged = value;
       notifyListeners();
     }
   }
@@ -103,6 +104,13 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  int get currentIndex2 => _currIndex2;
+  set currentIndex2(int value) {
+    if(value != _currIndex2){
+      _currIndex2 = value;
+      notifyListeners();
+    }
+  }
 
   isAscendingOrder() {
     _isAscendingOrder = !_isAscendingOrder;
@@ -116,7 +124,10 @@ class HomeProvider extends ChangeNotifier {
     note.isSelected = !note.isSelected;
     notifyListeners();
   }
-
+  isNotSelected(Note note) {
+    note.isSelected = false;
+    notifyListeners();
+  }
 
   String time (Note note) => DateFormat.yMMMd().add_jms().format(note.createdTime);
   double minHeight (int index) => _getMinHeight(index);
@@ -151,8 +162,8 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  void handleOnPressed() {
-    isPlaying = !isPlaying;
-    isPlaying ? _animationController.forward() : _animationController.reverse();
+  void updateLayout() {
+    layoutChanged = !layoutChanged;
+    // layoutChanged ? _animationController.forward() : _animationController.reverse();
   }
 }
