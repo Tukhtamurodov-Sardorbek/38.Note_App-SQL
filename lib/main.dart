@@ -8,10 +8,19 @@ import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // #StatusBar & NavigationBar Color
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Color(0xff00000f),
+      systemNavigationBarColor: Color(0xff00000f),
+    ),
+  );
+  // #Orientations
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
 
   runApp(
       MultiProvider(
