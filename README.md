@@ -1,16 +1,17 @@
-# note_app_sql_database
+# ```Note App With SQL Database```
 
-A new Flutter project.
+| Home Page | Create Note Page |
+|----------------|:----------------:|
+| ![Home](assets/readme/1.jpg) | ![Create](assets/readme/2.jpg) |
 
-## Getting Started
+| Create Note | Grid View | Grid View |
+|----------------|:----------------:|:----------------:|
+| ![Create](assets/readme/3.jpg) | ![Grid](assets/readme/4.jpg) | ![Create](assets/readme/5.jpg) |
 
-This project is a starting point for a Flutter application.
+| List View | List View | Order by importance in descending order |
+|----------------|:----------------:|:----------------:|
+| ![Create](assets/readme/6.jpg) | ![Grid](assets/readme/7.jpg) | ![Sort](assets/readme/8.jpg) |
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| Order by importance in ascending order | Order by time in ascending order |  Order by time in descending order |
+|----------------|:----------------:|:----------------:|
+| ![Sort](assets/readme/9.jpg) | ![Grid](assets/readme/10.jpg) | ![Sort](assets/readme/11.jpg) |
