@@ -57,7 +57,6 @@ class SQLDatabase {
 CREATE TABLE $tableNotes (
     ${NoteFields.id} $idType,
     ${NoteFields.isImportant} $boolType,
-    ${NoteFields.number} $intType,
     ${NoteFields.title} $textType,
     ${NoteFields.description} $textType,
     ${NoteFields.time} $textType
@@ -99,11 +98,22 @@ CREATE TABLE $tableNotes (
     }
   }
 
-  Future<List<Note>> readAll() async {
+  Future<List<Note>> readAll(bool isAscendingOrder, bool byTime) async {
     // * Reference to database
     final database = await instance.database;
+    // timeOrImportance == true => time else => isImportant
+    // final orderBy = isAscendingOrder ? '${NoteFields.time} ASC' : '${NoteFields.time} DESC'; // ASC = ascending order
+    // final orderBy = isAscendingOrder ? '${NoteFields.isImportant} ASC' : '${NoteFields.isImportant} DESC'; // ASC = ascending order
 
-    final orderBy = '${NoteFields.time} ASC'; // ASC = ascending order
+    final orderBy = isAscendingOrder && byTime
+        ? '${NoteFields.time} ASC'
+        : !isAscendingOrder && byTime
+            ? '${NoteFields.time} DESC'
+            : isAscendingOrder && !byTime
+                ? '${NoteFields.isImportant} ASC'
+                : '${NoteFields.isImportant} DESC'; // ASC = ascending order
+
+    // final orderBy = '${NoteFields.time} DESC'; // ASC = descending order
     final result = await database.query(tableNotes, orderBy: orderBy);
 
     // * In order to create our own query statement
@@ -117,10 +127,10 @@ CREATE TABLE $tableNotes (
     final database = await instance.database;
     // * In order to use a SQL statement => use database.rawUpdate
     return database.update(
-        tableNotes,
-        note.toJson(),
-        where: '${NoteFields.id} = ?',
-        whereArgs: [note.id],
+      tableNotes,
+      note.toJson(),
+      where: '${NoteFields.id} = ?',
+      whereArgs: [note.id],
     );
   }
 
@@ -133,6 +143,19 @@ CREATE TABLE $tableNotes (
       where: '${NoteFields.id} = ?',
       whereArgs: [id],
     );
+  }
+
+  Future deleteAll(List<int> id) async {
+    // * Reference to database
+    final database = await instance.database;
+
+    for(int i = 0; i < id.length; i++){
+      await database.delete(
+        tableNotes,
+        where: '${NoteFields.id} = ?',
+        whereArgs: [id[i]],
+      );
+    }
   }
 
   Future close() async {
