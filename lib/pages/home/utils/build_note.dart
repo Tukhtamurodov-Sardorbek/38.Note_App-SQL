@@ -26,9 +26,12 @@ class BuildNote extends StatelessWidget {
         } else {
           provider.removeElement(note.id!);
         }
-        print(provider.notesToBeDeleted);
+        debugPrint(provider.notesToBeDeleted.toString());
       },
       onLongPressCancel: () {
+        provider.notes.map((note) {
+          provider.isNotSelected(note);
+        });
         provider.clear();
       },
       child: Container(
@@ -104,7 +107,7 @@ class BuildNote extends StatelessWidget {
                   fontSize: 18,
                 ),
                 overflow: TextOverflow.ellipsis,
-                maxLines: provider.isPlaying ? 5 : 17,
+                maxLines: provider.layoutChanged ? 5 : 17,
               ),
             ),
           ],
